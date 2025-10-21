@@ -2,14 +2,14 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Screen from "../layout/screen";
 
-export const ModuleListScreen = () => {
+export const ModuleViewScreen = () => {
   return (
     <Screen>
-      <Text>List</Text>
+      <Text>View</Text>
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({});
 
-export default ModuleListScreen;
+export default ModuleViewScreen;
