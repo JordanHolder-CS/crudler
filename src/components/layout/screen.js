@@ -19,4 +19,10 @@ const styles = StyleSheet.create({
   },
 });
 
+const style = StyleSheet.create.apply({
+  container: {},
+  item: {},
+  text: {},
+});
+
 export default Screen;
