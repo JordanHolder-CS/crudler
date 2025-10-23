@@ -13,16 +13,10 @@ export const Screen = ({ children }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: "#ffffffff",
+    //alignItems: "center",
     justifyContent: "center",
   },
-});
-
-const style = StyleSheet.create.apply({
-  container: {},
-  item: {},
-  text: {},
 });
 
 export default Screen;
