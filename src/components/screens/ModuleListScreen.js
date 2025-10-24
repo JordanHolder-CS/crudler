@@ -5,10 +5,11 @@ import Screen from "../layout/screen.js";
 import initialModules from "../../data/modules.js";
 import ModuleList from "../Modules/ModuleList.js";
 
-export const ModuleListScreen = () => {
+export const ModuleListScreen = ({ navigation }) => {
   const [modules, setModules] = useState(initialModules);
 
-  const handleSelect = () => alert("Course selected");
+  const handleSelect = (module) =>
+    navigation.navigate("ModuleViewScreen", { module });
 
   const handleDelete = (module) =>
     setModules(modules.filter((item) => item.ModuleID !== module.ModuleID));
@@ -20,7 +21,7 @@ export const ModuleListScreen = () => {
 
   return (
     <Screen>
-      <ModuleList modules={modules} onSelect={handleDelete} />
+      <ModuleList modules={modules} onSelect={handleSelect} />
     </Screen>
   );
 };

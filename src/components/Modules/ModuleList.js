@@ -17,7 +17,10 @@ const ModuleList = ({ modules, onSelect }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingHorizontal: 20 },
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
 });
 
 export default ModuleList;
