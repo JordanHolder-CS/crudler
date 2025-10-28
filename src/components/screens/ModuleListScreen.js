@@ -9,12 +9,16 @@ export const ModuleListScreen = ({ navigation }) => {
   const [modules, setModules] = useState(initialModules);
 
   const handleSelect = (module) =>
-    navigation.navigate("ModuleViewScreen", { module });
+    navigation.navigate("ModuleViewScreen", { module, onDelete });
 
   const handleDelete = (module) =>
     setModules(modules.filter((item) => item.ModuleID !== module.ModuleID));
 
-  //modules =
+  const onDelete = (module) => {
+    handleDelete(module);
+    navigation.goBack();
+  };
+
   console.log(
     `After deleting ${module.ModuleCode}, modules length is ${modules.length}`
   );

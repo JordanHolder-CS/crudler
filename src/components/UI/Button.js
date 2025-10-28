@@ -1,11 +1,13 @@
-import { Children } from "react";
 import { Pressable, Text, StyleSheet, View } from "react-native";
 
 // Reusable base button with optional style overrides
-const BaseButton = ({ label, onPress, style, textStyle, ...rest }) => {
+const BaseButton = ({ label, onPress, style, textStyle, icon, ...rest }) => {
   return (
     <Pressable onPress={onPress} style={[styles.button, style]} {...rest}>
-      <Text style={[styles.label, textStyle]}>{label}</Text>
+      <View style={styles.innerRow}>
+        {icon ? <View style={styles.iconWrapper}>{icon}</View> : null}
+        <Text style={[styles.label, textStyle]}>{label}</Text>
+      </View>
     </Pressable>
   );
 };
@@ -47,6 +49,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 8,
     flex: 1,
+  },
+  innerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  iconWrapper: {
+    marginRight: 8,
   },
   modify: {
     backgroundColor: "white",
