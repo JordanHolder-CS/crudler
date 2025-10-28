@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Screen from "../layout/screen";
+import { DeleteButton, ModifyButton, ButtonTray } from "../UI/Button";
 import FullWidthImage from "react-native-fullwidth-image";
 
 export const ModuleView = ({ module }) => {
@@ -19,6 +20,10 @@ export const ModuleView = ({ module }) => {
           {module.ModuleLeaderName}{" "}
           <Text style={styles.dimText}>(Module Leader)</Text>
         </Text>
+        <ButtonTray>
+          <ModifyButton label="Modify" />
+          <DeleteButton label="Delete" />
+        </ButtonTray>
       </View>
     </View>
   );
