@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import Screen from "../layout/screen";
 import { DeleteButton, ModifyButton, ButtonTray } from "../UI/Button";
 import FullWidthImage from "react-native-fullwidth-image";
@@ -7,6 +7,12 @@ import Icons from "../UI/Icons";
 
 export const ModuleView = ({ module, onDelete }) => {
   const handleDelete = () => onDelete(module);
+  const requestDelete = () =>
+    Alert.alert(
+      "Warning!",
+      `Are you sure that you want to delete module ${module.ModuleCode} ${module.ModuleName}`,
+      [{ text: "Cancel" }, { text: "Delete", onPress: handleDelete }]
+    );
   return (
     <View style={styles.container}>
       <FullWidthImage
@@ -27,7 +33,7 @@ export const ModuleView = ({ module, onDelete }) => {
           <DeleteButton
             icon={<Icons.Delete />}
             label="Delete"
-            onPress={handleDelete}
+            onPress={requestDelete}
           />
         </ButtonTray>
       </View>
@@ -54,7 +60,7 @@ const styles = StyleSheet.create({
   },
   container: {
     gap: 15,
-    paddingHorizontal: 20,
+    //paddingHorizontal: 20,
     paddingVertical: 50,
   },
 });
