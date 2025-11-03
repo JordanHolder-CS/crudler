@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { BaseButton, ButtonTray } from "./Button.js";
 import Icons from "./Icons.js";
+import { Picker } from "@react-native-picker/picker";
 
 const Form = ({ children, onSubmit, onCancel, submitLabel, submitIcon }) => {
   return (
@@ -27,7 +28,31 @@ const InputText = ({ label, value, onChange }) => {
   );
 };
 
+const InputSelect = ({ label, prompt, options, value, onChange }) => {
+  return (
+    <View style={styles.item}>
+      <Text style={styles.itemLabel}>{label}</Text>
+      <Picker
+        mode="dropdown"
+        selectedValue={value}
+        onValueChange={onChange}
+        style={styles.ItemPickerStyle}
+      >
+        <Picker.Item
+          value={null}
+          label={prompt}
+          style={styles.ItemPickerPromptStyle}
+        />
+        {options.map((option, index) => (
+          <Picker.Item key={index} value={option.value} label={option.label} />
+        ))}
+      </Picker>
+    </View>
+  );
+};
+
 Form.InputText = InputText;
+Form.InputSelect = InputSelect;
 
 const styles = StyleSheet.create({
   formContainer: {
@@ -49,6 +74,13 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderWidth: 1,
     borderColor: "lightgrey",
+  },
+  ItemPickerStyle: {
+    height: 50,
+    backgroundColor: "whitesmoke",
+  },
+  ItemPickerPromptStyle: {
+    color: "grey",
   },
 });
 
