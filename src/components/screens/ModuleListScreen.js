@@ -1,5 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { useState } from "react";
 import Icons from "../UI/Icons";
 import Screen from "../layout/screen.js";
