@@ -5,7 +5,7 @@ import { DeleteButton, ModifyButton, ButtonTray } from "../UI/Button";
 import FullWidthImage from "react-native-fullwidth-image";
 import Icons from "../UI/Icons";
 
-export const ModuleView = ({ module, onDelete }) => {
+export const ModuleView = ({ module, onDelete, onModify }) => {
   const handleDelete = () => onDelete(module);
   const requestDelete = () =>
     Alert.alert(
@@ -13,6 +13,7 @@ export const ModuleView = ({ module, onDelete }) => {
       `Are you sure that you want to delete module ${module.ModuleCode} ${module.ModuleName}`,
       [{ text: "Cancel" }, { text: "Delete", onPress: handleDelete }]
     );
+
   return (
     <View style={styles.container}>
       <FullWidthImage
@@ -29,7 +30,11 @@ export const ModuleView = ({ module, onDelete }) => {
           <Text style={styles.dimText}>(Module Leader)</Text>
         </Text>
         <ButtonTray>
-          <ModifyButton icon={<Icons.Edit />} label="Modify" />
+          <ModifyButton
+            icon={<Icons.Edit />}
+            label="Modify"
+            onPress={onModify}
+          />
           <DeleteButton
             icon={<Icons.Delete />}
             label="Delete"

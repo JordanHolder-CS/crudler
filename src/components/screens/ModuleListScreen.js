@@ -18,10 +18,14 @@ import { BaseButton, ButtonTray } from "../UI/Button.js";
 export const ModuleListScreen = ({ navigation }) => {
   const handleAdd = (module) => setModules([...modules, module]);
 
-  const [modules, setModules] = useState(initialModules);
+  const handleModify = (updatedModule) =>
+    setModules(
+      modules.map((module) =>
+        module.ModuleID === updatedModule.ModuleID ? updatedModule : module
+      )
+    );
 
-  const gotoViewScreen = (module) =>
-    navigation.navigate("ModuleViewScreen", { module, onDelete });
+  const [modules, setModules] = useState(initialModules);
 
   const handleDelete = (module) =>
     setModules(modules.filter((item) => item.ModuleID !== module.ModuleID));
@@ -35,6 +39,15 @@ export const ModuleListScreen = ({ navigation }) => {
     navigation.goBack();
   };
 
+  const onModify = (module) => {
+    handleModify(module);
+    //navigation.navigate("Modules");
+    //navigation.popToTop();
+    navigation.replace("ModuleViewScreen", { module, onDelete, onModify });
+  };
+
+  const gotoViewScreen = (module) =>
+    navigation.navigate("ModuleViewScreen", { module, onDelete, onModify });
   const gotoAddScreen = () => navigation.navigate("ModuleAddScreen", { onAdd });
 
   return (

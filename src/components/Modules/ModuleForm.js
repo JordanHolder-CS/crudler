@@ -23,18 +23,19 @@ const levels = [
   { value: 7, label: "7 (Masters)" },
 ];
 
-const ModuleForm = ({ onSubmit, onCancel }) => {
-  const [module, setModule] = useState(defaultModule);
+const ModuleForm = ({ originalModule, onSubmit, onCancel }) => {
+  const [module, setModule] = useState(originalModule || defaultModule);
   const handleSubmit = () => onSubmit(module);
   const handleChange = (field, value) =>
     setModule({ ...module, [field]: value });
 
   return (
     <Form
-      onSubmit={handleSubmit}
-      submitLabel={"Add"}
-      Icons={<Icons.Add />}
       style={styles.formContainer}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
+      submitLabel={originalModule ? "Modify" : "Add"}
+      Icons={originalModule ? <Icons.Edit /> : <Icons.Add />}
     >
       <Form.InputText
         label="Module Code"

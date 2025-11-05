@@ -5,12 +5,19 @@ import FullWidthImage from "react-native-fullwidth-image";
 import ModuleListScreen from "./ModuleListScreen";
 import ModuleView from "../Modules/ModuleView.js";
 
-export const ModuleViewScreen = ({ navigate, route }) => {
-  const { module, onDelete } = route.params;
+export const ModuleViewScreen = ({ navigation, route }) => {
+  const { module, onDelete, onModify } = route.params;
+
+  const gotoModifyScreen = () =>
+    navigation.replace("ModuleModifyScreen", { module, onModify });
 
   return (
     <Screen>
-      <ModuleView module={module} onDelete={onDelete} />
+      <ModuleView
+        module={module}
+        onDelete={onDelete}
+        onModify={gotoModifyScreen}
+      />
     </Screen>
   );
 };
