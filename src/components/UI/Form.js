@@ -12,7 +12,14 @@ import { BlurView } from "expo-blur";
 import { Picker } from "@react-native-picker/picker";
 import { BaseButton, ButtonTray } from "./Button.js";
 import Icons from "./Icons.js";
-const Form = ({ children, onSubmit, onCancel, submitLabel, submitIcon }) => {
+const Form = ({
+  children,
+  onSubmit,
+  onCancel,
+  submitLabel,
+  submitIcon,
+  isLoading,
+}) => {
   return (
     <View style={styles.formContainer}>
       <View style={styles.formItems}>{children}</View>
@@ -35,7 +42,14 @@ const InputText = ({ label, value, onChange }) => {
     </View>
   );
 };
-const InputSelect = ({ label, prompt, options, value, onChange }) => {
+const InputSelect = ({
+  label,
+  prompt,
+  options,
+  value,
+  onChange,
+  isLoading,
+}) => {
   const [iosPickerVisible, setIosPickerVisible] = useState(false);
   const showPlaceholderOption =
     !!prompt && !options.some((option) => option.value === null);
@@ -58,7 +72,7 @@ const InputSelect = ({ label, prompt, options, value, onChange }) => {
   if (Platform.OS === "ios") {
     return (
       <View style={styles.item}>
-        <Text style={styles.itemLabel}>{label}</Text>
+        <Text style={styles.itemLabel}> {label}</Text>
         <Pressable
           style={styles.iosPickerButton}
           onPress={() => setIosPickerVisible(true)}
@@ -92,7 +106,9 @@ const InputSelect = ({ label, prompt, options, value, onChange }) => {
             />
             <View style={styles.iosPickerModal}>
               <View style={styles.iosPickerToolbar}>
-                <Text style={styles.iosPickerPrompt}>{prompt}</Text>
+                <Text style={styles.iosPickerPrompt}>
+                  {isLoading ? <Text>Loading records...</Text> : prompt}
+                </Text>
                 <Pressable onPress={handleConfirm}>
                   <Text style={styles.iosPickerDoneText}>Done</Text>
                 </Pressable>

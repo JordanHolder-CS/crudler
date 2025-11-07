@@ -7,16 +7,29 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Icons from "../UI/Icons";
 import Screen from "../layout/screen.js";
-import initialModules from "../../data/modules.js";
 import ModuleList from "../Modules/ModuleList.js";
 import { BaseButton, ButtonTray } from "../UI/Button.js";
+import API from "../API/API.js";
 //import { Button } from "react-native-web";
 
 export const ModuleListScreen = ({ navigation }) => {
   const handleAdd = (module) => setModules([...modules, module]);
+
+  const modulesEndpoint = "https://softwarehub.uk/unibase/api/modules";
+  const [modules, setModules] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const loadModules = async (endpoint) => {
+    const response = await API.get(endpoint);
+    setIsLoading(false);
+    if (response.isSuccess) setModules(response.result);
+  };
+  useEffect(() => {
+    loadModules(modulesEndpoint);
+  }, []);
 
   const handleModify = (updatedModule) =>
     setModules(
@@ -24,8 +37,6 @@ export const ModuleListScreen = ({ navigation }) => {
         module.ModuleID === updatedModule.ModuleID ? updatedModule : module
       )
     );
-
-  const [modules, setModules] = useState(initialModules);
 
   const handleDelete = (module) =>
     setModules(modules.filter((item) => item.ModuleID !== module.ModuleID));
@@ -55,6 +66,8 @@ export const ModuleListScreen = ({ navigation }) => {
       <ButtonTray>
         <BaseButton label="Add" icon={<Icons.Add />} onPress={gotoAddScreen} />
       </ButtonTray>
+      {isLoading && <Text>Loading records...</Text>}
+
       <ModuleList modules={modules} onSelect={gotoViewScreen} />
     </Screen>
   );

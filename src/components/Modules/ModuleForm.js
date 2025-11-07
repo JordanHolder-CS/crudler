@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import API from "../API/API.js";
 import Icons from "../UI/Icons.js";
 import { BaseButton, ButtonTray } from "../UI/Button.js";
 import Form from "../UI/Form.js";
@@ -9,9 +10,10 @@ const defaultModule = {
   ModuleName: null,
   ModuleCode: null,
   ModuleLevel: null,
+  ModuleYearID: null,
   ModuleLeaderID: null,
   ModuleLeaderName: null,
-  ModuleImage:
+  ModuleImageURL:
     "https://images.freeimages.com/images/small-previews/cf5/cellphone-1313194.jpg",
 };
 
@@ -23,11 +25,37 @@ const levels = [
   { value: 7, label: "7 (Masters)" },
 ];
 
-const ModuleForm = ({ originalModule, onSubmit, onCancel }) => {
+const years = [
+  { value: 1, label: "Local 2022-23" },
+  { value: 2, label: "Local 2023-24" },
+  { value: 3, label: "Local 2024-25" },
+  { value: 4, label: "Local 2025-26" },
+];
+
+const yearsEndpoint = "https://softwarehub.uk/unibase/api/years";
+
+const ModuleForm = ({ originalModule, onSubmit, onCancel, isLoading }) => {
   const [module, setModule] = useState(originalModule || defaultModule);
+  const [years, setYears] = useState([]);
+  const [isYearsLoading, setIsYearsLoading] = useState(true);
+
+  const loadYears = async (endpoint) => {
+    const response = await API.get(endpoint);
+    setIsYearsLoading(false);
+    if (response.isSuccess) setYears(response.result);
+  };
+  useEffect(() => {
+    loadYears(yearsEndpoint);
+  }, []);
+
   const handleSubmit = () => onSubmit(module);
   const handleChange = (field, value) =>
     setModule({ ...module, [field]: value });
+
+  const cohort = years.map((year) => ({
+    value: year.YearID,
+    label: year.YearName,
+  }));
 
   return (
     <Form
@@ -54,6 +82,13 @@ const ModuleForm = ({ originalModule, onSubmit, onCancel }) => {
         value={module.ModuleLevel}
         onChange={(value) => handleChange("ModuleLevel", value)}
       />
+      <Form.InputSelect
+        label="Module Year"
+        prompt="Select module year..."
+        options={cohort}
+        value={module.ModuleYearID}
+        onChange={(value) => handleChange("ModuleYearID", value)}
+      />
       <Form.InputText
         label="Module Leader"
         value={module.ModuleLeaderName}
@@ -61,8 +96,8 @@ const ModuleForm = ({ originalModule, onSubmit, onCancel }) => {
       />
       <Form.InputText
         label="Image URL"
-        value={module.ModuleImage}
-        onChange={(value) => handleChange("ModuleImage", value)}
+        value={module.ModuleImageURL}
+        onChange={(value) => handleChange("ModuleImageURL", value)}
       />
     </Form>
   );
